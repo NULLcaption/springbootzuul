@@ -1,0 +1,36 @@
+server:
+    port: 9100 #启动端口
+
+
+# eureka 客户端配置
+eureka:
+    client:
+      registerWithEureka: false   #是否将自己注册到 Eureka-Server 中，默认的为 true   registerWithEureka等同于register_with_eureka
+      fetchRegistry: false
+
+# zuul配置
+zuul:
+  host:
+    connect-timeout-millis: 3000
+    socket-timeout-millis: 3000
+  # 设置stripPrefix来决定是否需要前缀，true是不加前缀（默认），false就会添加到路径上
+  stripPrefix: false
+  #  zuul路由配置
+  routes:
+    app-1:
+      path: /**
+      serviceId: apps
+
+
+# 负载均衡配置
+apps:
+  ribbon:
+    listOfServers: http://127.0.0.1:9300,http://10.101.0.8:9200
+
+
+# ribbon 配置
+ribbon:
+  ReadTimeout: 3000
+  ConnectTimeout: 3000
+  eureka:
+    enabled: false  #暂时关闭eureka对ribbon的支持
